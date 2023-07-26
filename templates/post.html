@@ -1,0 +1,31 @@
+
+{{define "body"}}
+<section class="ftco-section" id="notifications">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                        <h2 class="heading-section mb-4">Post Information</h2>
+                        <div class="alert alert-info">
+                        <div class="container">
+                            <div class="d-flex">
+                            <div class="alert-icon">
+                                <i class="ion-ios-information-circle-outline"></i>
+                            </div>
+                            <p class="mb-0 ml-2"><b>Info alert:</b> Bookmark this URL to view post status...</p>
+                            </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ion-ios-close"></i></span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+<section class="ftco-section pb-0">
+        <div class="container" style="align-content:center">
+            <p>{{.asset}}</p>
+        </div>
+    </div>
+</section>
+{{end}}

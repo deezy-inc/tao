@@ -1,0 +1,21 @@
+
+{{define "body"}}
+<section class="ftco-section pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 heading-title">
+                    <h1>Generate a Taproot Assets Receive Address</h1><br>
+                    <p>New address:</p><br>
+                    <p>{{.address.Address}}</p>
+                    <form method="POST">
+                        <label>Asset Id:</label><br />
+                        <input type="text" name="asset_id" required><br />
+                        <label>Amount:</label><br />
+                        <input type="text" name="amt" required><br />
+                        <input type="submit">
+                    </form>
+          </div>
+        </div>
+    </div>
+</section>
+{{end}}

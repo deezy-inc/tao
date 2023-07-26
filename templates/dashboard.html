@@ -1,0 +1,113 @@
+
+{{define "body"}}
+<section class="ftco-section pb-0">
+        <div class="container" style="align-content:center">
+            <div class="row">
+                <div class="col-md-12 heading-title">
+                        <div class="col-md-3 text-center">
+                                <h2 class="heading-section mb-4">
+                                    <small>{{.user.Username}}</small>
+                                </h2>
+                                <img src="{{if .user.Avatar}} {{.user.Avatar}} {{else}} static/images/avatar.jpg {{end}}" alt="Circle Image" class="rounded-circle img-fluid image">
+                                <div><i class="ion-ios-pricetag mr-2"></i><b>{{.user.FeeRate}}</b> sats/message</div>
+                                <div><i class="ion-ios-twitter mr-2"></i>Twitter: {{.user.Twitter}}</div>
+                                <div><i class="ion-ios-twitter mr-2"></i>PGP Key: {{.user.PgpKey}}</div>
+                            </div>
+
+
+                            <table style = "width: 100%">
+                                    <tbody>
+                                    <tr>
+                                            <td><h5>Update Profile (coming soon)</h5></td>
+                                            <td style="align-content: right"><h5>Request Withdrawal</h5></td>
+                                    </tr>
+                                    <tr>
+                                    <td>
+                                        <form method="PUT">
+                                            <input type="hidden" name="avatar" value=""><br />
+                                            <!-- <label>Email (optional):</label><br />
+                                            <input type="text" name="email"><br />
+                                            <label>Password:</label><br />
+                                            <input type="password" name="password" required><br /> -->
+                                            <label>Avatar (optional):</label><br />
+                                            <input type="file" name="imgur" class="imgur" accept="image/*" data-max-size="5000"/><br />
+                                            <label>Twitter (optional):</label><br />
+                                            <input type="text" name="twitter"><br />
+                                            <label>Satoshis/Message (1000 default):</label><br />
+                                            <input type="number" name="fee_rate"><br />
+                                            <label>PGP Key (optional):</label><br />
+                                            <textarea name="pgpkey"></textarea><br />
+                                            <input type="submit">
+                                        </form>
+                                    </td>
+                                    <td style="vertical-align:top">
+                                        Available balance: <b>{{.balance}}</b> satoshis<br><br><br>
+                                        <form method="POST">
+                                            <label>Amount (satoshis):</label><br />
+                                            <textarea name="sats" required></textarea><br />
+                                            <label>Lightning Invoice:</label><br />
+                                            <textarea name="invoice" required></textarea><br />
+                                            <input type="submit">
+                                        </form>
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                    </table>
+
+
+
+          </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section" id="messages">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="heading-section mb-4">Recent Received Messages</h2>
+                    <table border="1" style = "width: 100%">
+                            <tbody>
+                            <tr>
+                            <td><b>From</b></td>
+                            <td><b>Message</b></td>
+                            <td><b>Sats Paid</b></td>
+                            </tr>
+                            {{range .posts}}
+                            <tr>
+                            <td>{{if .From}} {{.From}} {{else}} Anonymous {{end}}</td>
+                            <td>{{.Message}}</td>
+                            <td>{{if .Sats}} {{.Sats}} {{else}} 1000 {{end}}</td>
+                            </tr>
+                            {{end}}
+                            </tbody>
+                            </table>
+                </div>
+            </div>
+        </div>
+  </section>
+
+  <section class="ftco-section" id="withdrawals">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="heading-section mb-4">Withdrawals</h2>
+                    <table border="1" style = "width: 100%">
+                            <tbody>
+                            <tr>
+                            <td><b>Sats Paid</b></td>
+                            <td><b>Completed</b></td>
+                            </tr>
+                            {{range .withdrawals}}
+                            <tr>
+                            <td>{{.Sats}}</td>
+                            <td>{{.Paid}}</td>
+                            </tr>
+                            {{end}}
+                            </tbody>
+                            </table>
+                </div>
+            </div>
+        </div>
+  </section>
+{{end}}

@@ -1,0 +1,71 @@
+
+{{define "body"}}
+<section class="ftco-section ftco-section-2">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 text-center">
+                <h2 class="heading-section mb-4 pb-md-3">
+                    
+                </h2>
+                <p>Tao is still under development, but will allow you to view, mint, send, and receive Taproot assets on BTC testnet (for now).</p>
+                <br>
+                <p>Ability to view asset details, import/export proofs, and faucet functionality coming <i>very</i> soon!</p>
+                <br>
+                <p><a href="/address">Click here to generate a new Taproot Assets address and send Tao a Taproot asset!</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- - - - - -end- - - - -  -->
+<section class="ftco-section" id="images">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="heading-section mb-4">Featured Assets</h2>
+                    <div class="row">
+                        {{range .users}}
+                        <div class="col-md-3 text-center">
+                            <h2 class="heading-section mb-4">
+                                <a href="/{{ .Username}}">
+                                    <small>{{.Username}}</small>
+                                </a>
+                            </h2>
+                            <img src="{{if .Avatar}} {{.Avatar}} {{else}} static/images/avatar.jpg {{end}}" alt="Circle Image" class="rounded-circle img-fluid image">
+                            <div><i class="ion-ios-pricetag mr-2"></i><b>{{.FeeRate}}</b> sats/message</div>
+                            <div><a href="/{{ .Username}}"><button type="button" class="btn btn-outline-primary btn-sm">Message Now</button></a></div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+
+  <section class="ftco-section" id="messages">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="heading-section mb-4">Recent Taproot Assets</h2>
+                    <table border="1" style = "width: 100%">
+                            <tbody>
+                            <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Genesis Point</b></td>
+                            <td><b>Asset Id</b></td>
+                            <td><b>Amount</b></td>
+                            </tr>
+                            {{range .assets}}
+                            <tr>
+                            <td><a href="/asset/{{ .AssetGenesis.Name}}">{{.AssetGenesis.Name}}</a></td>
+                            <td><a target="_blank" href="https://mempool.space/testnet/tx/{{ .AssetGenesis.GenesisPoint}}">{{.AssetGenesis.GenesisPoint}}</a></td>
+                            <td>{{.AssetGenesis.AssetID}}</td>
+                            <td>{{.Amount}}</td>
+                            </tr>
+                            {{end}}
+                            </tbody>
+                            </table>
+                </div>
+            </div>
+        </div>
+  </section>
+{{end}}
