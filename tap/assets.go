@@ -28,8 +28,12 @@ type TapAssetResponse struct {
 	ScriptVersion    int    `json:"script_version"`
 	ScriptKey        string `json:"script_key"`
 	ScriptKeyIsLocal bool   `json:"script_key_is_local"`
-	AssetGroup       string `json:"asset_group"`
-	ChainAnchor      struct {
+	AssetGroup       struct {
+		RawGroupKey     string `json:"raw_group_key"`
+		TweakedGroupKey string `json:"tweaked_group_key"`
+		AssetIDSig      string `json:"asset_id_sig"`
+	} `json:"asset_group"`
+	ChainAnchor struct {
 		AnchorTx         string `json:"anchor_tx"`
 		AnchorTxid       string `json:"anchor_txid"`
 		AnchorBlockHash  string `json:"anchor_block_hash"`
@@ -230,6 +234,8 @@ func (client *TapClient) ListAssets() (assets TapAssetsResponse, err error) {
 		log.Println(err)
 		return assets, err
 	}
+
+	log.Println(string(bodyBytes))
 
 	if err := json.Unmarshal(bodyBytes, &assets); err != nil {
 		log.Println("death2")
