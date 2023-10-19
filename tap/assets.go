@@ -12,7 +12,7 @@ type TapAssetsResponse struct {
 }
 
 type TapAssetResponse struct {
-	Version      int `json:"version"`
+	Version      string `json:"version"`
 	AssetGenesis struct {
 		GenesisPoint string `json:"genesis_point"`
 		Name         string `json:"name"`
@@ -113,6 +113,11 @@ type TapExportProofRequest struct {
 	ScriptKey string `json:"script_key"`
 }
 
+type TapExportProofResponse struct {
+	RawProofFile string `json:"raw_proof_file"`
+	GenesisPoint string `json:"genesis_point"`
+}
+
 type TapDecodeProofRequest struct {
 	RawProof          string `json:"raw_proof"`
 	WithPrevWitnesses bool   `json:"with_prev_witnesses"`
@@ -158,7 +163,7 @@ func (client *TapClient) GetAssetProof(assetName string) (proofResponse TapProof
 
 	log.Println("hello2")
 
-	var encodedProof TapDecodeProofRequest
+	var encodedProof TapExportProofResponse
 	resp, err := client.sendPostRequestJSON("v1/taproot-assets/proofs/export", &TapExportProofRequest{
 		asset.AssetGenesis.AssetID,
 		asset.ScriptKey,
@@ -178,9 +183,8 @@ func (client *TapClient) GetAssetProof(assetName string) (proofResponse TapProof
 		log.Println(err)
 		return proofResponse, err
 	}
-
 	resp, err = client.sendPostRequestJSON("v1/taproot-assets/proofs/decode", &TapDecodeProofRequest{
-		encodedProof.RawProof, true, true,
+		encodedProof.RawProofFile, true, true,
 	})
 	if err != nil {
 		log.Println(err)
@@ -196,7 +200,7 @@ func (client *TapClient) GetAssetProof(assetName string) (proofResponse TapProof
 	if strings.Contains(string(bodyBytes), "unable to fetch asset meta") {
 		// try fetching proof info without meta data
 		resp, err = client.sendPostRequestJSON("v1/taproot-assets/proofs/decode", &TapDecodeProofRequest{
-			encodedProof.RawProof, true, false,
+			encodedProof.RawProofFile, true, false,
 		})
 		if err != nil {
 			// if error contains "unable to fetch asset meta" then try again without it
