@@ -196,7 +196,7 @@ func (client *TapClient) GetAssetProof(assetName string) (proofResponse TapProof
 		log.Println(err)
 		return proofResponse, err
 	}
-
+	log.Println(string(bodyBytes))
 	if strings.Contains(string(bodyBytes), "unable to fetch asset meta") {
 		// try fetching proof info without meta data
 		resp, err = client.sendPostRequestJSON("v1/taproot-assets/proofs/decode", &TapDecodeProofRequest{
